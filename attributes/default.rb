@@ -332,6 +332,7 @@ default['apache']['proxy']['require']    = 'all denied'
 default['apache']['proxy']['order']      = 'deny,allow'
 default['apache']['proxy']['deny_from']  = 'all'
 default['apache']['proxy']['allow_from'] = 'none'
+default['apache']['proxy']['proxy_requests'] = 'Off'
 
 # Default modules to enable via include_recipe
 default['apache']['default_modules'] = %w(
