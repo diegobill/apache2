@@ -2,7 +2,7 @@
   #turning ProxyRequests on and allowing proxying from all may allow
   #spammers to use your proxy to send email.
 
-  ProxyRequests On
+  ProxyRequests <%= node['apache']['proxy']['proxy_requests'] %>
 
   <Proxy *>
     AddDefaultCharset off
