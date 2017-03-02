@@ -245,6 +245,9 @@ LogFormat "%{User-agent}i" agent
 #    ErrorDocument 506 /error/HTTP_VARIANT_ALSO_VARIES.html.var
 <% end -%>
 
+<% if node['apache']['limitrequestline']!='' -%>LimitRequestLine <%= node['apache']['limitrequestline'] %><% end -%>
+<% if node['apache']['limitrequestfieldsize']!='' -%>LimitRequestFieldSize <%= node['apache']['limitrequestfieldsize'] %><% end -%>
+
 <% if node['apache']['version'] == '2.4' -%>
 # Include generic snippets of statements
 IncludeOptional <%= node['apache']['dir'] %>/conf-enabled/*.conf
