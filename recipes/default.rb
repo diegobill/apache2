@@ -144,7 +144,7 @@ template "/etc/sysconfig/#{node['apache']['package']}" do
   owner 'root'
   group node['apache']['root_group']
   mode '0644'
-  notifies :restart, 'service[apache2]', :delayed
+  #notifies :restart, 'service[apache2]', :delayed
   only_if  { platform_family?('rhel', 'fedora', 'suse') }
 end
 
@@ -153,7 +153,7 @@ template "#{node['apache']['dir']}/envvars" do
   owner 'root'
   group node['apache']['root_group']
   mode '0644'
-  notifies :reload, 'service[apache2]', :delayed
+  #notifies :reload, 'service[apache2]', :delayed
   only_if  { platform_family?('debian') }
 end
 
@@ -170,7 +170,7 @@ template 'apache2.conf' do
   owner 'root'
   group node['apache']['root_group']
   mode '0644'
-  notifies :reload, 'service[apache2]', :delayed
+  #notifies :reload, 'service[apache2]', :delayed
 end
 
 %w(security charset).each do |conf|
