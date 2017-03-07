@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: apache2
+# Cookbook:: apache2
 # Recipe:: mod_headers
 #
-# Copyright 2008-2013, Chef Software, Inc.
+# Copyright:: 2008-2013, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,5 +18,5 @@
 #
 
 apache_module 'headers' do
-      restart true
+  restart true
 end

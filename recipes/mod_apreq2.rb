@@ -1,10 +1,10 @@
 #
-# Cookbook Name:: apache2
+# Cookbook:: apache2
 # Recipe:: apreq2
 #
 # modified from the python recipe by Jeremy Bingham
 #
-# Copyright 2008-2013, Chef Software, Inc.
+# Copyright:: 2008-2013, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -43,8 +43,7 @@ when 'rhel', 'fedora'
 end
 
 file "#{node['apache']['dir']}/conf.d/apreq.conf" do
-  action :delete
-  backup false
+  content '# conf is under mods-available/apreq.conf - apache2 cookbook\n'
 end
 
 apache_module 'apreq'

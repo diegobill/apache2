@@ -1,3 +1,6 @@
+<% if node['apache']['version'] != '2.4' -%>
+NameVirtualHost *:<%= node['apache']['default_site_port'] %>
+<% end -%>
 <VirtualHost *:<%= node['apache']['default_site_port'] %>>
   ServerAdmin <%= node['apache']['contact'] %>
 
@@ -37,7 +40,7 @@
 
   # Possible values include: debug, info, notice, warn, error, crit,
   # alert, emerg.
-  LogLevel warn
+  LogLevel <%= node['apache']['log_level'] %>
 
   CustomLog <%= node['apache']['log_dir'] %>/<%= node['apache']['access_log'] %> combined
   ServerSignature On

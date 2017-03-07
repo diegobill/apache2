@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: apache2
+# Cookbook:: apache2
 # Recipe:: mod_auth_cas
 #
-# Copyright 2013, Chef Software, Inc.
+# Copyright:: 2013, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -51,8 +51,7 @@ else
     end
 
     file "#{node['apache']['dir']}/conf.d/auth_cas.conf" do
-      action :delete
-      backup false
+      content '# conf is under mods-available/auth_cas.conf - apache2 cookbook\n'
     end
   end
 end

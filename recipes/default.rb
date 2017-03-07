@@ -1,9 +1,9 @@
 #
-# Cookbook Name:: apache2
+# Cookbook:: apache2
 # Recipe:: default
 #
-# Copyright 2008-2013, Chef Software, Inc.
-# Copyright 2014-2015, Alexander van Zoest
+# Copyright:: 2008-2013, Chef Software, Inc.
+# Copyright:: 2014-2015, Alexander van Zoest
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-package 'apache2' do
+package 'apache2' do # ~FC009 only available in apt_package. See #388
   package_name node['apache']['package']
   default_release node['apache']['default_release'] unless node['apache']['default_release'].nil?
 end
@@ -57,6 +57,8 @@ end
 # perl is needed for the a2* scripts
 package node['apache']['perl_pkg']
 
+package 'perl-Getopt-Long-Descriptive' if platform?('fedora')
+
 %w(a2ensite a2dissite a2enmod a2dismod a2enconf a2disconf).each do |modscript|
   link "/usr/sbin/#{modscript}" do
     action :delete
@@ -84,9 +86,6 @@ unless platform_family?('debian')
     command "/usr/local/bin/apache2_module_conf_generate.pl #{node['apache']['lib_dir']} #{node['apache']['dir']}/mods-available"
     action :nothing
   end
-
-  # enable mod_deflate for consistency across distributions
-  include_recipe 'apache2::mod_deflate'
 end
 
 if platform_family?('freebsd')
@@ -130,7 +129,7 @@ end
 
 directory node['apache']['lock_dir'] do
   mode '0755'
-  if node['platform_family'] == 'debian' && node['apache']['version'] == '2.2'
+  if node['platform_family'] == 'debian'
     owner node['apache']['user']
   else
     owner 'root'
@@ -210,8 +209,10 @@ service 'apache2' do
   service_name apache_service_name
   case node['platform_family']
   when 'rhel'
-    restart_command "/sbin/service #{apache_service_name} restart && sleep 1" if node['apache']['version'] == '2.2'
-    reload_command "/sbin/service #{apache_service_name} graceful"
+    if node['platform_version'].to_f < 7.0 && node['apache']['version'] != '2.4'
+      restart_command "/sbin/service #{apache_service_name} restart && sleep 1"
+      reload_command "/sbin/service #{apache_service_name} graceful && sleep 1"
+    end
   when 'debian'
     provider Chef::Provider::Service::Debian
   when 'arch'
@@ -219,5 +220,5 @@ service 'apache2' do
   end
   supports [:start, :restart, :reload, :status]
   action [:enable, :start]
-  only_if "#{node['apache']['binary']} -t", :environment => { 'APACHE_LOG_DIR' => node['apache']['log_dir'] }, :timeout => 10
+  only_if "#{node['apache']['binary']} -t", environment: { 'APACHE_LOG_DIR' => node['apache']['log_dir'] }, timeout: 10
 end

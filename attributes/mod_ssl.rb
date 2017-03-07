@@ -1,9 +1,9 @@
 #
-# Cookbook Name:: apache2
+# Cookbook:: apache2
 # Attributes:: mod_ssl
 #
-# Copyright 2012-2013, Chef Software, Inc.
-# Copyright 2014, Viverae, Inc.
+# Copyright:: 2012-2013, Chef Software, Inc.
+# Copyright:: 2014, Viverae, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 
 default['apache']['mod_ssl']['port'] = 443
 default['apache']['mod_ssl']['protocol'] = 'All -SSLv2 -SSLv3'
-default['apache']['mod_ssl']['cipher_suite'] = 'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA'
+default['apache']['mod_ssl']['cipher_suite'] = 'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA'
 default['apache']['mod_ssl']['honor_cipher_order']     = 'On'
 default['apache']['mod_ssl']['insecure_renegotiation'] = 'Off'
 default['apache']['mod_ssl']['strict_sni_vhost_check'] = 'Off'
